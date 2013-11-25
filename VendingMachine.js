@@ -2,15 +2,15 @@ function VendingMachine() {};
 
 VendingMachine.prototype = {
 
-    _htSelection : {
+    _htMenu : {
         "Coke" : "Coke",
-        "Cider" : "Cider",
+        "Sprite" : "Sprite",
         "Orange Juice" : "Orange Juice",
         "Apple Juice" : "Apple Juice"
     },
 
     buy : function(sBeverage){
-        return this._htSelection[sBeverage];
+        return this._htMenu[sBeverage];
     }
 }
 
