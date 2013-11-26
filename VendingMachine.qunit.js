@@ -7,27 +7,35 @@ module('VendingMachine', {
         oVendingMachine = new VendingMachine();
     },
     teardown : function(){
+        /* 리소스 정리 */
+        oVendingMachine = null;
     }
 });
 
-test("자판기에서 콜라, 사이다, 오렌지 주스, 사과 주스 중 원하는 음료를 뽑을 수 있다.", function(){
+test("여러 종류의 음료 중 원하는 음료를 뽑을 수 있다.", function(){
     // Given
     // When
     var sBeverage1 = oVendingMachine.buy("Coke");
-    var sBeverage2 = oVendingMachine.buy("Cider");
+    var sBeverage2 = oVendingMachine.buy("Sprite");
     var sBeverage3 = oVendingMachine.buy("Orange Juice");
     var sBeverage4 = oVendingMachine.buy("Apple Juice");
-    var sBeverage5 = oVendingMachine.buy("Coffee");
-    var sBeverage6 = oVendingMachine.buy("Milk");
 
     // Then
     equal(sBeverage1, "Coke");
-    equal(sBeverage2, "Cider");
+    equal(sBeverage2, "Sprite");
     equal(sBeverage3, "Orange Juice");
     equal(sBeverage4, "Apple Juice");
+});
 
-    notEqual(sBeverage5, "Coffee");
-    notEqual(sBeverage6, "Milk");
+test("콜라, 사이다, 오렌지 주스, 사과 주스만 뽑을 수 있다.", function(){
+    // Given
+    // When
+    var sBeverage1 = oVendingMachine.buy("Coffee");
+    var sBeverage2 = oVendingMachine.buy("Milk");
+
+    // Then
+    notEqual(sBeverage1, "Coffee");
+    notEqual(sBeverage2, "Milk");
 });
 
 });
