@@ -25,8 +25,9 @@ test("자판기에서 콜라, 사이다, 오렌지 주스, 사과 주스 중 원
     equal(sBeverage2, "Cider");
     equal(sBeverage3, "Orange Juice");
     equal(sBeverage4, "Apple Juice");
-    equal(sBeverage5, null);
-    equal(sBeverage6, null);
+
+    notEqual(sBeverage5, "Coffee");
+    notEqual(sBeverage6, "Milk");
 });
 
 });
