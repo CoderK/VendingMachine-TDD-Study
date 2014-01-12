@@ -5,6 +5,13 @@ $(function() {
     module('VendingMachine', {
         setup : function(){
             oVendingMachine = new VendingMachine();
+            oVendingMachine.supply({
+                "Coke": 1,
+                "Sprite" : 1,
+                "Orange Juice" : 1,
+                "Apple Juice" : 1,
+                "NonExistingDrink": 0
+            });
         },
         teardown : function(){
             /* 리소스 정리 */
@@ -12,7 +19,7 @@ $(function() {
         }
     });
 
-    test("여러 종류의 음료 중 원하는 음료를 뽑을 수 있다.", function(){
+    test("자판기에서 원하는 음료를 뽑을 수 있다.", function(){
         // Given
         // When
         var sBeverage1 = oVendingMachine.buy("Coke");
@@ -27,27 +34,39 @@ $(function() {
         equal(sBeverage4, "Apple Juice");
     });
 
-    test("콜라, 사이다, 오렌지 주스, 사과 주스만 뽑을 수 있다.", function(){
+    test("재고가 있는 음료만 뽑을 수 있다.", function(){
         // Given
         // When
-        var sBeverage1 = oVendingMachine.buy("Coffee");
-        var sBeverage2 = oVendingMachine.buy("Milk");
+        var sBeverage1 = oVendingMachine.buy("NonExistingDrink");
 
         // Then
-        notEqual(sBeverage1, "Coffee");
-        notEqual(sBeverage2, "Milk");
+        equal(sBeverage1, null);
     });
 
-test("재고만큼 음료를 구매할 수 있다.", function(){
-    // given
+    test("재고만큼 음료를 구매할 수 있다.", function(){
+        // given
+        // when
+        var sBeverage1 = oVendingMachine.buy("Coke");
+        var sBeverage2 = oVendingMachine.buy("Coke");
 
-    // when
-    var sBeverage1 = oVendingMachine.buy("Coke");
-    var sBeverage2 = oVendingMachine.buy("Coke");
+        // then
+        equal( sBeverage1, "Coke" );
+        equal( sBeverage2, null );
+    });
 
-    // then
-    equal( sBeverage1, "Coke" );
-    equal( sBeverage2, null );
-});
+    test("동전을 넣은 만큼 음료를 구매할 수 있다.", function(){
+        // given
+        oVendingMachine.supply({ "Coke": 2 });  // 재고에 영향을 받아선 안 되므로 재고를 설정한다.
+        oVendingMachine.fixPrice({ "Coke" : 100 });
+        oVendingMachine.insertCoin(100);
+
+        // when
+        var sBeverage1 = oVendingMachine.buy("Coke");
+        var sBeverage2 = oVendingMachine.buy("Coke");
+
+        // then
+        equal( sBeverage1, "Coke" );
+        equal( sBeverage2, null );
+    });
 
 });
