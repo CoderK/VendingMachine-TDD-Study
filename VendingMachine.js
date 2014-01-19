@@ -1,52 +1,56 @@
 function VendingMachine() {
     this._htStocks = {};
-    this._htPrice = {};
+    this._htPriceTable = {};
     this._nBalance = 0;
 };
 
 VendingMachine.prototype = {
 
     buy : function(sBeverage){
-        if(this._hasNoEnoughMoney(sBeverage)){
+        if( this._canNotBuyIt(sBeverage) ){
             return null;
         }
 
-        if( this._hasNoStocks(sBeverage) ){
-            return null;
-        }
-
-        this._deductBalanceByPriceOf(sBeverage);
+        this._deductBalnceByPriceOf(sBeverage);
         this._reduceStockByOne(sBeverage);
 
         return sBeverage;
-    },
-
-    _deductBalanceByPriceOf: function (sBeverage) {
-        this._nBalance -= this._htPrice[sBeverage];
-    },
-
-    _reduceStockByOne: function (sBeverage) {
-        this._htStocks[sBeverage]--;
-    },
-
-    _hasNoEnoughMoney: function (sBeverage) {
-        return this._htPrice[sBeverage] > this._nBalance;
-    },
-
-    _hasNoStocks: function (sBeverage) {
-        return !this._htStocks[sBeverage] || this._htStocks[sBeverage] < 1;
     },
 
     supply : function(htStocks){
         this._htStocks = htStocks;
     },
 
-    fixPrice : function(htPrice){
-        this._htPrice = htPrice;
+    insertCoin : function(nCoin){
+        this._nBalance += nCoin;
     },
 
-    insertCoin : function(nCoin){
-        this._nBalance = nCoin;
-    }
-};
+    balance : function(){
+        return this._nBalance;
+    },
 
+    fixPrice : function(htPriceTable){
+        this._htPriceTable = htPriceTable;
+    },
+
+    _canNotBuyIt: function (sBeverage) {
+        return this._hasNoMoney(sBeverage) || this._hasNoStocks(sBeverage);
+    },
+
+    _deductBalnceByPriceOf: function (sBeverage) {
+        this._nBalance -= this._htPriceTable[sBeverage];
+    },
+
+    _reduceStockByOne: function (sBeverage) {
+        this._htStocks[sBeverage]--;
+    },
+
+    _hasNoMoney: function (sBeverage) {
+        return this._htPriceTable[sBeverage] > this._nBalance;
+    },
+
+    _hasNoStocks: function (sBeverage) {
+        return !this._htStocks[sBeverage] || this._htStocks[sBeverage] < 1;
+    }
+
+};

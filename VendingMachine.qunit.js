@@ -54,11 +54,21 @@ $(function() {
         equal( sBeverage2, null );
     });
 
-    test("동전을 넣은 만큼 음료를 구매할 수 있다.", function(){
+    test("동전을 여러 번 넣을 수 있다.", function(){
         // given
-        oVendingMachine.supply({ "Coke": 2 });  // 재고에 영향을 받아선 안 되므로 재고를 설정한다.
-        oVendingMachine.fixPrice({ "Coke" : 100 });
+        // when
+        oVendingMachine.insertCoin(500);
         oVendingMachine.insertCoin(100);
+
+        // then
+        equal( oVendingMachine.balance(), 600);
+    });
+
+    test("동전을 넣은 만큼만 음료를 구매할 수 있다.", function(){
+        // given
+        oVendingMachine.supply({ "Coke": 100 });  // 재고가 없어서 나오지 않는 상황이 되어서는 안 되므로.
+        oVendingMachine.fixPrice({ "Coke": 500 });
+        oVendingMachine.insertCoin(500);
 
         // when
         var sBeverage1 = oVendingMachine.buy("Coke");
