@@ -29,7 +29,7 @@ VendingMachine.prototype = {
         return this._nBalance;
     },
 
-    fixPrice : function(htPriceTable){
+    setPrice : function(htPriceTable){
         this._htPriceTable = htPriceTable;
     },
 
