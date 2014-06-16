@@ -1,4 +1,3 @@
-
 $(function() {
 
     var oVendingMachine = null;
