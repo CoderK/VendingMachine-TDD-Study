@@ -33,6 +33,10 @@ VendingMachine.prototype = {
         this._htPriceTable = htPriceTable;
     },
 
+    insertPaperMoney : function(nMoney){
+        this._nBalance += nMoney;
+    },
+
     _canNotBuyIt: function (sBeverage) {
         return this._hasNoMoney(sBeverage) || this._hasNoStocks(sBeverage);
     },

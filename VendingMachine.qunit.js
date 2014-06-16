@@ -88,4 +88,21 @@ $(function() {
         equal( sBeverage2, null );
     });
 
+    test("지폐를 넣을 수 있다.", function(){
+        // given
+        oVendingMachine.supply({ "Coke": 100 });  // 재고가 없어서 나오지 않는 상황이 되어서는 안 되므로.
+        oVendingMachine.setPrice({ "Coke": 2000 });
+        oVendingMachine.insertPaperMoney(2000);
+
+        // when
+        oVendingMachine.buy("Coke");
+        var sBeverage1 = oVendingMachine.buy("Coke");
+        var sBeverage2 = oVendingMachine.buy("Coke");
+
+        // then
+        equal( sBeverage1, "Coke" );
+        equal( sBeverage2, null );
+    });
+
+
 });
