@@ -37,6 +37,13 @@ VendingMachine.prototype = {
         this._nBalance += nMoney;
     },
 
+    returnBalance : function(){
+        var nBalance = this._nBalance;
+        this._nBalance = 0;
+
+        return nBalance;
+    },
+
     _canNotBuyIt: function (sBeverage) {
         return this._hasNoMoney(sBeverage) || this._hasNoStocks(sBeverage);
     },

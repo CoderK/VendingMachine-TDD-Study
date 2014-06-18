@@ -104,5 +104,14 @@ $(function() {
         equal( sBeverage2, null );
     });
 
+    test("거스름돈을 돌려받을 수 있다.", function(){
+        // given
+        // when
+        var nChange = oVendingMachine.returnBalance();
+
+        // then
+        equal( nChange, DEFAULT_MONEY );
+    });
+
 
 });
